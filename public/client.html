@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mogged Remote Client</title>
+<style>
+body{margin:0;font-family:Arial;background:#071225;color:#e6eef8;text-align:center;}
+input,button{padding:8px;margin:5px;border-radius:6px;border:none;}
+#screen{margin-top:10px;border:1px solid rgba(255,255,255,0.1);border-radius:6px;}
+#log{margin-top:10px;height:150px;overflow-y:auto;border:1px solid rgba(255,255,255,0.2);padding:6px;}
+</style>
+</head>
+<body>
+<h1>Remote Client</h1>
+<input id="host" placeholder="Host ID"/>
+<button id="connect">Conectar</button>
+<button id="disconnect">Desconectar</button>
+<div>Status: <span id="status">offline</span></div>
+<img id="screen" width="640" height="360" alt="screen preview"/>
+<div id="log"></div>
+
+<script src="client.js"></script>
+</body>
+</html>
