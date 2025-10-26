@@ -2,7 +2,8 @@ name: Build Windows Host
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -10,28 +11,27 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.21'
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
 
-    - name: Ensure Go module
-      run: |
-        if [ ! -f go.mod ]; then
-          go mod init mogged-remote
-        fi
+      - name: Initialize Go module
+        run: |
+          if (!(Test-Path go.mod)) {
+            go mod init mogged-remote
+          }
+          go mod tidy
 
-    - name: Get dependencies
-      run: go get ./...
+      - name: Build executable
+        run: |
+          go build -ldflags="-s -w" -o host.exe host.go
 
-    - name: Build host.exe
-      run: go build -ldflags="-s -w" -o host.exe host.go
-
-    - name: Upload host.exe
-      uses: actions/upload-artifact@v3
-      with:
-        name: host-windows
-        path: host.exe
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-windows
+          path: host.exe
